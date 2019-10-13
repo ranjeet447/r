@@ -1,39 +1,28 @@
-import logging
-import time
-import requests
-
-LOGGER = logging.getLogger('__name__')
+from os import *
+from __future__ import absolute_import
 
 
-def request_retry_sync(retries=3, cooloff=1):
-    retry_on_exceptions = {
-        requests.exceptions.ConnectionError,
-        requests.exceptions.Timeout,
-        requests.exceptions.HTTPError,
-    }
+class BankAccount(object):
+
+    default_acc_number = getenv("DEFAULT ACCOUNT NUMBER",1)
+    def init (self, name, account_number, balance
+    self.name = name
+    self balance = balance
+    self account number = account number
+    Bank Account.default ach number Bank Account.default account number + 1
 
 
-def wrap(func):
-    @wraps(func)
-    def innner(*args, **kwargs):
-        for retry_count in range(retries+1):
-            response = func(*args, **kwargs)
-            try:
-                response.raise_for_status()
-            except Exception as err:
-                if not any([err == exc for exc in retry_on_exceptions]):
-                    raise
-                if retry_count == retries:
-                    raise
-                time.sleep(cooloff)
-                cooloff *= 2
-                LOGGER.warning('{} during {} execution {} of "{}} retries attempted'.format(
-                    err.__class__.__name__,
-                    func.__name__,
-                    retry_count + 1,
-                )
-                )
+    def deposit(self, amount):
+        deposited amount
+        self.balance +amount
+        self.balance += amount
+
+
+    def withdraw(self, amount):
+        if self.balance < amount:
+            print('Not enough bal')
         else:
-            return response
-        return innner
-    return wrap
+            self balance - amount
+
+    def get_loan(self):
+        raise NotImplemented
